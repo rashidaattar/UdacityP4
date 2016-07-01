@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,10 +24,13 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ActionBarActivity {
 
+   public ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dialog=new ProgressDialog(this);
     }
 
 
@@ -52,26 +56,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
-        try {
-            String joke=new EndpointsAsyncTask().execute(this).get();
-            Intent intent=new Intent(this, JokeActivity.class);
-            intent.putExtra("joke",joke);
-            startActivity(intent);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
-
 class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+
 
     @Override
     protected String doInBackground(Context... params) {
@@ -81,7 +70,7 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
-                    .setRootUrl("http://10.10.5.127:8080/_ah/api/")
+                    .setRootUrl("http://10.14.188.93:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -102,4 +91,7 @@ class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         }
     }
 }
+
+
+
 
