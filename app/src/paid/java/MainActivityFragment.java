@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import android.app.ProgressDialog;
 import com.udacity.jokeandroid.JokeActivity;
 
 import java.util.concurrent.ExecutionException;
