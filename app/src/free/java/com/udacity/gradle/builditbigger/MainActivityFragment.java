@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -38,8 +39,10 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mInterstitialAd.isLoaded()) {
+                    progressDialog.show();
                     mInterstitialAd.show();
                 } else {
+
                     tellJoke();
                 }
             }
@@ -49,7 +52,7 @@ public class MainActivityFragment extends Fragment {
         // get test ads on a physical device. e.g.
         // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)//add device id in strings.xml
                 .build();
         mAdView.loadAd(adRequest);
         progressDialog=new ProgressDialog(getActivity());
@@ -62,8 +65,7 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                progressDialog.show();
-               tellJoke();
+                tellJoke();
             }
         });
 
@@ -75,10 +77,10 @@ public class MainActivityFragment extends Fragment {
     public void tellJoke(){
         try {
             String joke=new EndpointsAsyncTask().execute(this.getActivity()).get();
-            progressDialog.dismiss();
             Intent intent=new Intent(this.getActivity(), JokeActivity.class);
             intent.putExtra("joke",joke);
             startActivity(intent);
+            progressDialog.dismiss();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -89,7 +91,7 @@ public class MainActivityFragment extends Fragment {
     }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR) //add device id in strings.xml
                 .build();
 
         mInterstitialAd.loadAd(adRequest);

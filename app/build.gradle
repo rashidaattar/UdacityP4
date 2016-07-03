@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.udacity.gradle.builditbigger"
@@ -25,6 +25,10 @@ android {
             applicationId "com.udacity.gradle.builditbigger.paid"
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -33,9 +37,13 @@ dependencies {
 
     compile project(':jokeandroid')
 
-    compile 'com.android.support:appcompat-v7:24.0.0-beta1'
-
-    compile 'com.google.android.gms:play-services-ads:9.0.2'
-    compile 'com.google.firebase:firebase-ads:9.0.2'
+    compile 'com.android.support:appcompat-v7:2.2.1'
+    freeCompile 'com.google.android.gms:play-services-ads:9.2.0'
+    freeCompile 'com.google.firebase:firebase-ads:9.2.0'
     compile project(path: ':jokebackend', configuration: 'android-endpoints')
+
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile "org.mockito:mockito-core:1.+"
 }
+
+
